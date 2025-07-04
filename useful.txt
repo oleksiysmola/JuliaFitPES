@@ -1,0 +1,3 @@
+dump(object) to find the fields!
+julia --project=.
+Pkg.instantiate()
