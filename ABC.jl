@@ -1,6 +1,9 @@
 function defineInternalCoordinates(zMatrixCoordinates::Vector{Float64})::Vector{Float64}
-    # Trivial case - no dihedrals to convert
-    internalCoordinates::Vector{Float64} = zMatrixCoordinates
+    convertToRadians::Float64 = pi/180
+    # Trivial case - no dihedrals to convert just degrees to radians
+    internalCoordinates::Vector{Float64} = zeros(length(zMatrixCoordinates))
+    internalCoordinates[1:2] = zMatrixCoordinates[1:2]
+    internalCoordinates[3] = zMatrixCoordinates[3]*convertToRadians
     return internalCoordinates
 end
 
