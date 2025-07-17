@@ -1,10 +1,16 @@
 function defineInternalCoordinates(zMatrixCoordinates::Vector{Float64})::Vector{Float64}
-    convertToRadians::Float64 = pi/180
+    convertToRadians::Float64 = pi/180.0
     # Trivial case - no dihedrals to convert just degrees to radians
     internalCoordinates::Vector{Float64} = zeros(length(zMatrixCoordinates))
     internalCoordinates[1:2] = zMatrixCoordinates[1:2]
     internalCoordinates[3] = zMatrixCoordinates[3]*convertToRadians
     return internalCoordinates
+end
+
+function convertAnglesToRadians(structuralParameters::Vector{Float64})::Vector{Float64}
+    convertToRadians::Float64 = pi/180.0
+    structuralParameters[3] = structuralParameters[3]*convertToRadians
+    return structuralParameters
 end
 
 function defineXiCoordinates(internalCoordinates::Vector{Float64}, structuralParameters::Vector{Float64})::Vector{Float64}
@@ -23,7 +29,7 @@ function defineXiCoordinates(internalCoordinates::Vector{Float64}, structuralPar
 
     # xi[numberOfStretches+1:end] = (internalCoordinates[numberOfStretches+1:end] - equilibriumParameters[numberOfStretches+1:end]).*convertToRadians
     # # Trigonometric-type function for the bending 
-    xi[numberOfStretches+1:end] = cos.(internalCoordinates[numberOfStretches+1:end].*convertToRadians) .- cos.(equilibriumParameters[numberOfStretches+1:end].*convertToRadians)
+    xi[numberOfStretches+1:end] = cos.(equilibriumParameters[numberOfStretches+1:end]) .- cos.(internalCoordinates[numberOfStretches+1:end])
     # xi[numberOfStretches+1:end] = cos.(pi .- internalCoordinates[numberOfStretches+1:end].*convertToRadians) .- cos.(pi .- equilibriumParameters[numberOfStretches+1:end].*convertToRadians)
     # xi[numberOfStretches+1:end] = sin.(pi .- internalCoordinates[numberOfStretches+1:end].*convertToRadians) .- cos.(pi .- equilibriumParameters[numberOfStretches+1:end].*convertToRadians)
     return xi

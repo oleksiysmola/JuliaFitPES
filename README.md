@@ -1,2 +1,2 @@
 ## Julia fitting for multi-dimensional potential energy surfaces
-My attempt (perhaps poorly) to construct a fitter for a potential energy surface. The fundamental premise is broken into two steps. The potential series expansion coefficients are solved linearly by inverting the design matrix at each iteration of the non-linear LsqFit solver for the equilibrium parameters.
+My attempt (perhaps poorly) to construct a fitter for a potential energy surface. The fundamental premise is broken into two steps. The current implementation uses stochastic mini-batch gradient descent.
